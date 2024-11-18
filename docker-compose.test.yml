@@ -1,0 +1,13 @@
+---
+services:
+    drawio:
+        build: .
+        environment:
+            PROXY_PREFIX_LOCAL: http://www.example.com
+    test:
+        build: test
+        depends_on:
+            drawio:
+                condition: service_healthy
+        volumes:
+            - "./test/test.sh:/test.sh:ro"
