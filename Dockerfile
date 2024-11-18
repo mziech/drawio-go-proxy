@@ -8,7 +8,6 @@ FROM alpine AS RUNTIME
 WORKDIR /app
 EXPOSE 8080
 
-ENV DRAWIO_BRANCH dev
 VOLUME /webroot
 ENTRYPOINT /app/entrypoint.sh
 HEALTHCHECK CMD wget -q -O /dev/null http://localhost:8080/health || exit 1
