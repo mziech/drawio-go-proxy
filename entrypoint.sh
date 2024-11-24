@@ -35,8 +35,8 @@ if [ "$current_version" != "$DRAWIO_VERSION" ]; then
   wget "https://github.com/jgraph/drawio/archive/v$DRAWIO_VERSION.zip"
   unzip "v$DRAWIO_VERSION.zip"
   cd "./drawio-$DRAWIO_VERSION"
-  cp -fr src/main/webapp/* /webroot/
-  rm -r /webroot/WEB-INF /webroot/META-INF
+  cp -fr src/main/webapp/* /webroot/ || true
+  rm -r /webroot/WEB-INF /webroot/META-INF || true
   cd /webroot
   echo "$DRAWIO_VERSION" > VERSION
   rm -r /tmp/unpack
