@@ -2,7 +2,15 @@
 
 set -eu
 
-mkdir -p /webroot
+if [ "$UID" = "0" ]; then
+  user=$(stat -c '%u' /webroot)
+  if [ "$user" = "0" ]; then
+    echo "Running as root because /webroot is owned by root. This is NOT recommended!"
+  else
+    echo "Running with UID $user"
+    exec su "$user" -c "$0" "$@"
+  fi
+fi
 
 if [ -z "${DRAWIO_VERSION:-}" ]; then
   echo "Determining latest version of draw.io ..."
@@ -25,7 +33,7 @@ if [ "$current_version" != "$DRAWIO_VERSION" ]; then
   wget "https://github.com/jgraph/drawio/archive/v$DRAWIO_VERSION.zip"
   unzip "v$DRAWIO_VERSION.zip"
   cd "./drawio-$DRAWIO_VERSION/src/main/webapp"
-  mv * /webroot/
+  mv -f * /webroot/
   rm -r /webroot/WEB-INF /webroot/META-INF
   cd /webroot
   echo "$DRAWIO_VERSION" > VERSION
@@ -34,4 +42,5 @@ else
   echo "No update needed."
 fi
 
+echo "Running app"
 exec /app/drawio-go "$@"
