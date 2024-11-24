@@ -2,7 +2,7 @@
 
 set -eu
 
-if [ "$UID" = "0" ]; then
+if [ "$(id -u)" = "0" ]; then
   user=$(stat -c '%u' /webroot)
   if [ "$user" = "0" ]; then
     echo "Running as root because /webroot is owned by root. This is NOT recommended!"
