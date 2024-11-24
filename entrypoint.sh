@@ -7,9 +7,11 @@ if [ "$(id -u)" = "0" ]; then
   if [ "$user" = "0" ]; then
     echo "Running as root because /webroot is owned by root. This is NOT recommended!"
   else
-    echo "Running with UID $user"
+    echo "Changing to UID $user"
     exec su "$user" -c "$0" "$@"
   fi
+else
+  echo "Running with UID $(id -u)"
 fi
 
 if [ -z "${DRAWIO_VERSION:-}" ]; then
@@ -32,8 +34,8 @@ if [ "$current_version" != "$DRAWIO_VERSION" ]; then
   cd /tmp/unpack
   wget "https://github.com/jgraph/drawio/archive/v$DRAWIO_VERSION.zip"
   unzip "v$DRAWIO_VERSION.zip"
-  cd "./drawio-$DRAWIO_VERSION/src/main/webapp"
-  mv -f * /webroot/
+  cd "./drawio-$DRAWIO_VERSION"
+  cp -r src/main/webapp/* /webroot/
   rm -r /webroot/WEB-INF /webroot/META-INF
   cd /webroot
   echo "$DRAWIO_VERSION" > VERSION
