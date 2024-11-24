@@ -13,10 +13,13 @@ current_version=
 if [ -f /webroot/VERSION ]; then
   current_version=$(cat /webroot/VERSION)
   echo "draw.io $current_version is installed."
+else
+  echo "No draw.io version installed."
 fi
 
 if [ "$current_version" != "$DRAWIO_VERSION" ]; then
   echo "Downloading and installing draw.io $DRAWIO_VERSION ..."
+  rm -rf /tmp/unpack
   mkdir -p /tmp/unpack
   cd /tmp/unpack
   wget "https://github.com/jgraph/drawio/archive/v$DRAWIO_VERSION.zip"

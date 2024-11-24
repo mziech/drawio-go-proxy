@@ -1,3 +1,5 @@
+[![Docker](https://github.com/mziech/drawio-go-proxy/actions/workflows/docker.yml/badge.svg)](https://github.com/mziech/drawio-go-proxy/actions/workflows/docker.yml)
+
 # drawio-go-proxy
 
 This a small toy project Golang reimplementation of the [draw.io](https://github.com/jgraph/drawio)
